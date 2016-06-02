@@ -16,7 +16,7 @@ html(lang='en')
       h1 HIGHSCORE.TOP
       h2 bribe your way on top of the highscore
     form#payForm(name="adduser", method="post", action="/adduser", autocomplete="off", accept-charset="UTF-8")
-      input#amount(type='number', name='amount', minlength='1', min='5', placeholder='Your score in USD', required='')
+      input#amount(type='number', name='amount', minlength='1', min='5', max="1111111" placeholder='Your score in USD', required='')
       input#name(type='name', name='name', minlength='3', maxLength="20", placeholder='Your name', required='')
       input#link(type='link', name='link', placeholder='http://link.domain', required='')
       input#pay(type='submit', value='PAY')
