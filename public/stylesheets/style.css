@@ -207,3 +207,13 @@ footer {
     background-position: 50% 50%;
   }
 }
+
+@media screen and (max-width: 403px){
+  input, table, footer{
+    width: 95% !important;
+    margin: 30px auto;
+  }
+  body{
+    font-size: 1.05em;
+  }
+}
