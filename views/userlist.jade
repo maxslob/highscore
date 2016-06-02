@@ -1,0 +1,127 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    link(rel="icon" href="images/favicon.ico")
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=0.7, maximum-scale=0.7, minimum-scale=0.7')
+    title HIGHSCORE.TOP
+    meta(content='HIGHSCORE.TOP' property='og:title')
+    meta(content='HTTPS://HIGHSCORE.TOP' property='og:url')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='stylesheets/style.css')
+  body
+    header
+      .logo
+        img(src='images/wealthlogo.png', alt='Site logo')
+      h1 HIGHSCORE.TOP
+      h2 bribe your way on top of the highscore
+    form#payForm(name="adduser", method="post", action="/adduser", autocomplete="off", accept-charset="UTF-8")
+      input#amount(type='number', name='amount', minlength='1', min='5', placeholder='Your score in USD', required='')
+      input#name(type='name', name='name', minlength='3', maxLength="20", placeholder='Your name', required='')
+      input#link(type='link', name='link', placeholder='http://link.domain', required='')
+      input#pay(type='submit', value='PAY')
+    table
+      thead
+        tr
+          td RANK
+          td SCORE
+          td NAME
+      tbody
+        each user, i in userlist
+          tr
+            if i+1%10 == 1
+              td= i+1 + "st"
+            else if i+1%10 == 2
+              td= i+1 + "nd"
+            else if i+1%10 == 3
+              td= i+1 + "rd"
+            else
+              td= i+1 + "th"
+            td
+              b $
+              = user.score
+            td
+              a(href='#{user.link}', target="_blank")= user.name
+          
+    footer
+      span
+        b
+          | CREATED BY 
+          a(target='_blank', href='//maxslob.me') MAXSLOB
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+    script(src='https://checkout.stripe.com/checkout.js')
+    script(src='/javascripts/validate.js')
+    script.
+      // Adding classes to the first 3 places
+      $('table tbody tr:nth-child(1)').addClass('first');
+      $('table tbody tr:nth-child(2)').addClass('second');
+      $('table tbody tr:nth-child(3)').addClass('third');
+      $('#payForm').validate({
+      rules: {
+      link: {
+      required: true,
+      url: true
+      }
+      }
+      });
+    script.
+      function addUser(){
+      var name = $("#name").val();
+      var link = $("#link").val();
+      var score = Math.abs(parseInt($("#amount").val().replace(/\\D/g,'')));
+      $.ajax({
+      url: '/adduser',
+      type: 'POST',
+      data: {
+      link: link,
+      name: name,
+      score: score
+      }
+      }).done(function(){location.reload()});
+      }
+      $("#amount").on("change keyup", function(e) {
+      var amount = Math.abs(parseInt($("#amount").val().replace(/\\D/g,'')));
+      if(isNaN(amount)) {
+      $("#pay").val("PAY");
+      } else {
+      $("#pay").val("Pay $"+amount);
+      }
+      });
+      // Open Checkout when the link is clicked
+      $('#pay').on('click', function() {
+      if($('#payForm').valid()){
+      var amount = Math.abs(parseInt($("#amount").val().replace(/\\D/g,'')))*100;
+      checkout.open({
+      name: 'wealthscore bid',
+      description: 'Almost there!',
+      currency: "usd",
+      amount: amount
+      });
+      return false;
+      }
+      });
+      // Define handler to be called when Stripe returns a card token
+      function onReceiveToken(token, args) {
+      var amount = Math.abs(parseInt($("#amount").val().replace(/\\D/g,'')))*100;
+      // Submit token to server so it can charge the card
+      $.ajax({
+      url: '/charge',
+      type: 'POST',
+      data: {
+      stripeToken: token.id,
+      amount: amount
+      }
+      }).done(addUser);
+      }
+      // Configure Checkout
+      var checkout = StripeCheckout.configure({
+      key: 'pk_test_keNrkcQYYcsMearBjTVLnwnD',
+      token: onReceiveToken,
+      image: 'https://httpsimage.com/img/wealthlogo.png',
+      locale: 'auto'
+      });
+      // Close Checkout on page navigation
+      $(window).on('popstate', function() {
+      handler.close();
+      });
+

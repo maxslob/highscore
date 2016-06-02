@@ -1,0 +1,209 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* BASE */
+* {
+  box-sizing: border-box; }
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url("../fonts/OpenSans-Regular.otf");
+  font-weight: 400; }
+@font-face {
+  font-family: 'Open Sans Light';
+  src: url("../fonts/OpenSans-Light.otf");
+  font-weight: 300; }
+@font-face {
+  font-family: 'Open Sans Black';
+  src: url("../fonts/OpenSans-Black.otf");
+  font-weight: 900; }
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../fonts/OpenSans-Bold.otf");
+  font-weight: 700; }
+a {
+  color: inherit; }
+
+body {
+  font-family: 'Open Sans';
+  font-size: 16px;
+  background: url("../images/bg-texture.png") 50% 50% repeat;
+  animation: MOVE-BG 100s linear infinite;
+  color: #fff; }
+
+header {
+  text-align: center;
+  margin-top: 20px; }
+  header h1 {
+    font-family: inherit;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(80deg, gold 40%, #fff 60%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -o-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    -o-text-fill-color: transparent;
+    margin-top: 15px; }
+  header h2 {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-family: 'Open Sans Bold' !important;
+    color: #eee;
+    letter-spacing: 0px;
+    margin: 5px 0 30px;
+    text-shadow: 1px 1px #777; }
+
+#payForm input {
+  display: block;
+  margin: 5px auto;
+  width: 403px;
+  height: 40px;
+  -webkit-appearance: textfield !important;
+  text-align: center;
+  font-family: 'Open Sans Black';
+  font-size: 16px;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border: 1px solid silver; }
+  #payForm input[type="submit"] {
+    background-color: gold;
+    color: #111;
+    border: 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 16px; }
+    #payForm input[type="submit"]:hover {
+      background-color: #ffdf33; }
+  #payForm input:focus {
+    outline: none;
+    border-width: 2px;
+    border-color: gold; }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none; }
+
+.error {
+  margin: 0 auto;
+  display: block !important;
+  text-align: center;
+  text-transform: uppercase;
+  color: tomato;
+  font-size: 14px;
+  font-family: inherit; }
+
+table {
+  width: 403px;
+  margin: 30px auto 5px auto;
+  text-transform: uppercase;
+  font-family: 'Open Sans Black';
+  padding-bottom: 5px;
+  border-bottom: 1px solid silver; }
+  table tbody tr:last-child td {
+    padding-bottom: 10px; }
+  table td {
+    color: #eee; }
+  table .first td {
+    color: gold; }
+  table .first td {
+    padding-top: 10px !important; }
+  table .second td {
+    color: #50afff; }
+  table .third td {
+    color: #ff53dd; }
+  table .first td, table .second td, table .third td {
+    padding: 5px 0; }
+  table td {
+    padding: 2px 0; }
+    table td b {
+      color: gold;
+      font-size: 12px;
+      position: relative;
+      top: -2px;
+      margin-right: 2px; }
+    table td a {
+      transition: all 0.15s ease-in-out; }
+    table td a:hover {
+      color: #fff; }
+  table tr td:nth-child(2) {
+    padding-left: 40px; }
+  table tr td:nth-child(3) {
+    text-transform: none; }
+  table thead tr:first-child td {
+    border-bottom: 1px solid silver;
+    padding-bottom: 5px; }
+  table tr td:nth-child(3) {
+    text-align: right; }
+
+footer {
+  width: 403px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12px;
+  background: linear-gradient(-100deg, gold 40%, #fff 60%);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -o-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  -o-text-fill-color: transparent; }
+  footer a {
+    transition: all 0.15s ease-in-out;
+    border-bottom: 1px solid #998100; }
+    footer a:hover {
+      border-bottom: 1px solid gold; }
+
+/*# sourceMappingURL=styles.css.map */
+
+
+@-webkit-keyframes MOVE-BG {
+  from {
+    background-position: 0% 0%;
+  }
+  to { 
+    background-position: 50% 50%;
+  }
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.7, maximum-scale=0.7, minimum-scale=0.7">
+    <title>WEALTHSCORE.BID</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <header>
+      <div class="logo">
+        <img src="wealthlogo.png" alt="Site logo">
+      </div>
+      <h1>WEALTHSCORE.BID</h1>
+      <h2>bribe your way onto the wealth TABLE</h2>
+    </header>
+
+
+    <form id="payForm">
+      <input type="number" name="amount" id="amount" minlength="1" min="5" placeholder="Your score in USD" required>
+      <input type="name" name="name" id="name" minlength="3" placeholder="Your name" required>
+      <input type="link" name="link" id="link" placeholder="Link" required>
+      <input type="submit" value="PAY" id="pay" class="hvr-radial-out">
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <td>RANK</td>
+          <td>SCORE</td>
+          <td>NAME</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="first">
+          <td>1st</td>
+          <td><b>$</b>10000</td>
+          <td><a href="#">Testing Eeeefffffffeee</a></td>
+        </tr>
+        <tr class="second">
+          <td>2nd</td>
+          <td><b>$</b>1000</td>
+          <td><a href="#">EFEFUIHEFOHEOWHWWW</a></td>
+        </tr>
+        <tr class="third">
+          <td>3rd</td>
+          <td><b>$</b>100</td>
+          <td><a href="#">tesTng </a></td>
+        </tr>
+        <tr>
+          <td>4th</td>
+          <td><b>$</b>10</td>
+          <td><a href="#">tesTng advaf</a></td>
+        </tr>
+        <tr>
+          <td>5th</td>
+          <td><b>$</b>9</td>
+          <td><a href="#">Silicon Valley</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <footer>
+      <span><b>CREATED BY <a target="_blank" href="//maxslob.me">MAXSLOB</a></b></span>
+    </footer>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script src="validate.js"></script>
+    <script>
+      $('#payForm').validate({
+      rules: {
+        link: {
+          required: true,
+          url: true
+        }
+      }
+    });
+    </script>
+
+    <script>
+        function onPayCompleted(){
+          //ADD USER WRITTEN LINK & NAME TO THE TABLE
+          // ? DATABASE ?
+        }
+
+        $("#amount").on("change keyup", function(e) {
+          var amount = Math.abs(parseInt($("#amount").val().replace(/\D/g,'')));
+          if(isNaN(amount)) {
+            $("#pay").val("PAY");
+          } else {
+            $("#pay").val("Pay $"+amount);
+          }
+        });
+
+        // Open Checkout when the link is clicked
+        $('#pay').on('click', function() {
+            if($('#payForm').valid()){
+              var amount = Math.abs(parseInt($("#amount").val().replace(/\D/g,'')))*100;
+              checkout.open({
+                name: 'wealthscore bid',
+                description: 'Almost there!',
+                currency: "usd",
+                amount: amount
+              });
+              return false;
+            }
+        });
+
+
+        // Define handler to be called when Stripe returns a card token
+        function onReceiveToken(token, args) {
+            var amount = Math.abs(parseInt($("#amount").val().replace(/\D/g,'')))*100;
+            // Submit token to server so it can charge the card
+            $.ajax({
+                url: '/charge',
+                type: 'POST',
+                data: {
+                    stripeToken: token.id,
+                    amount: amount
+                },
+                complete: onPayCompleted
+            });
+        }
+
+        // Configure Checkout
+        var checkout = StripeCheckout.configure({
+            key: 'pk_test_keNrkcQYYcsMearBjTVLnwnD',
+            token: onReceiveToken,
+            image: 'https://httpsimage.com/img/wealthlogo.png',
+            locale: 'auto'
+        });
+
+        // Close Checkout on page navigation
+        $(window).on('popstate', function() {
+          handler.close();
+        });
+    </script>
+</body>
+</html>
