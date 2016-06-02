@@ -1,6 +1,5 @@
 var express = require('express');
 var stripe = require('stripe')('sk_test_B6xXZo7NGReUVsjf8KUukdz6');
-var nodemailer = require('nodemailer');
 var router = express.Router();
 
 /* GET home page. */
